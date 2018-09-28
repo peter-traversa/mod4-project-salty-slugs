@@ -7,8 +7,11 @@ var circle = new Konva.Circle({
     strokeWidth: 2
     });
     
+    circle.draggable('true')
+
     circle.on('xChange', function() {
         console.log('position change');
     });
+
     
     

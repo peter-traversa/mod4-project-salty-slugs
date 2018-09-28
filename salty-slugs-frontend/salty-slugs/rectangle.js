@@ -6,18 +6,18 @@ var rect = new Konva.Rect({
     fill: 'green',
     stroke: 'black',
     strokeWidth: 4
-  });
+});
  
-  rect.draggable('true')
+rect.draggable('true')
 
- rect.on('mouseout',function(){
-     console.log('Mouse left rectangle!')
- })
- 
- rect.on('mouseenter',function(){
-     console.log('Mouse entered rectangle!')
- })
+rect.on('mouseout',function(){
+    console.log('Mouse left rectangle!')
+})
 
- rect.on('mouseover',function(){
-     console.log('working')
- })
+rect.on('mouseenter',function(){
+    console.log('Mouse entered rectangle!')
+})
+
+rect.on('mouseover',function(){
+    console.log('working')
+})
