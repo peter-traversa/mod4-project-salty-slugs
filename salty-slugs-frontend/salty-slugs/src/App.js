@@ -1,20 +1,39 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
 import './App.css';
+import Form from './Form';
+import styled from 'styled-components';
 
 class App extends Component {
+
+  state = {
+    active: true
+  }
+
+  removeForm = () => {
+    this.setState({
+      active: false
+    })
+  }
+
+  persistUser = (username) => {
+    fetch('http://localhost:3000/api/v1/users', {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        name: username
+      })
+    }).then(function (response) { console.log(response); })
+  }
+
   render() {
-    return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="App-title">Welcome to React</h1>
-        </header>
-        <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
-        </p>
-      </div>
-    );
+      if(this.state.active) {
+          return < Form persistUser={this.persistUser} removeForm={this.removeForm}/>
+      } else {
+        return null
+      }
   }
 }
 
