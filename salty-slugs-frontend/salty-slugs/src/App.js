@@ -1,10 +1,7 @@
 import React, { Component } from 'react';
 import './App.css';
 import Form from './Form';
-import styled from 'styled-components';
-import {Stage,Layer,Rect} from 'react-konva';
-import {mazeWallDimensions} from './data.js';
-import MazeImage from './MazeImage.js'
+import Timer from './Timer'
 
 class App extends Component {
 
