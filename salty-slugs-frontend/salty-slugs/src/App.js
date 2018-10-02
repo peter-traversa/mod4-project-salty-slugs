@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import './App.css';
 import Form from './Form';
-import styled from 'styled-components';
+import Timer from './Timer'
 
 class App extends Component {
 
@@ -28,11 +28,17 @@ class App extends Component {
     }).then(function (response) { console.log(response); })
   }
 
+  
+
   render() {
       if(this.state.active) {
-          return < Form persistUser={this.persistUser} removeForm={this.removeForm}/>
+          return (
+            <div>
+              < Form persistUser={this.persistUser} removeForm={this.removeForm}/>
+            </div>
+          )
       } else {
-        return null
+        return  < Timer />
       }
   }
 }
