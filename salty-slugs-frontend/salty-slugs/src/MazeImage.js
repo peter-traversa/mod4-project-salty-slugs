@@ -5,18 +5,28 @@ import { Stage, Layer, Image } from 'react-konva';
 
 class MazeImage extends React.Component {
     state = {
-        image: null
+        image: new window.Image()
     };
     componentDidMount() {
-        const image = new window.Image();
-        image.src = '../salty-slugs/public/made2.gif';
-        image.onload = () => {
-            this.setState({ image: image });
-        }
-    };
-    
+        this.state.image.src = '../public/slug.png';
+        this.state.image.onload = () => {
+            // calling set state here will do nothing
+            // because properties of Konva.Image are not changed
+            // so we need to update layer manually
+            this.imageNode.getLayer().batchDraw();
+        };
+    }
+
     render() {
-        return <Image image={this.state.image} />;
+        return (
+            <Image
+                image={this.state.image}
+                y={250}
+                ref={node => {
+                    this.imageNode = node;
+                }}
+            />
+        );
     }
 }
 

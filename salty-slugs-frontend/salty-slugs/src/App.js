@@ -2,6 +2,9 @@ import React, { Component } from 'react';
 import './App.css';
 import Form from './Form';
 import Timer from './Timer'
+import MazeImage from './MazeImage'
+import {mazeWallDimensions} from './data.js'
+import { Rect, Stage, Layer, Image } from 'react-konva';
 
 class App extends Component {
 
