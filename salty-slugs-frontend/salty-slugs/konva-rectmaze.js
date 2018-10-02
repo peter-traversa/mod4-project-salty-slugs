@@ -12,6 +12,21 @@ let stage = new Konva.Stage({
 let layer = new Konva.Layer();
 stage.add(layer);
 
+let imageObj2 = new Image();
+
+imageObj2.onload = function() {
+  lettuce = new Konva.Image({
+    x: 420,
+    y: 549,
+    image: imageObj2,
+    width: 150,
+    height: 110
+  });
+  layer.add(lettuce);
+  stage.add(layer);
+};
+imageObj2.src = '../salty-slugs/public/RomaineLettuce.png';
+
 let slugImage
 
 let imageObj = new Image();
@@ -28,6 +43,7 @@ imageObj.onload = function() {
   stage.add(layer);
 };
 imageObj.src = '../salty-slugs/public/slug.png';
+
 
 let box = new Konva.Rect({
     x:870,
