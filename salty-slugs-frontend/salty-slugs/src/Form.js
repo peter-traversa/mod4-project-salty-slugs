@@ -1,24 +1,44 @@
 import React from 'react'
 import styled from 'styled-components';
 
-const Input = styled.input`
-  border: 1px;
-  border-radius: 20px;
-  font-size: 16px;
-  padding: 10px;
-  opacity: 0.7;
-  width: 80px;
-  background-color: DodgerBlue;
-  transition: all .5s;
+const StyledForm = styled.form`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100vw;
+  height: 100vh;
+`
 
-  :focus { outline: none;
-          width: 150px; }
+const Input = styled.input`
+    width: 280px;
+    height: 50px;
+    background: rgba(57, 63, 84, 0.8);
+    border: none;
+    font-size: 12pt;
+    color: #7881A1
+    padding-left: 25px;
+    margin-bottom: 40px;
+    transition: all .5s;
+
+    border-radius: 4px;
+    :focus {
+      width: 300px;
+      outline: none;
+      color: #BFD2FF;
+    }
+
 `
 
 class Form extends React.Component {
 
   state = {
-    username: ''
+    username: 'Choose Gamer Tag and Press Enter'
+  }
+
+  handleResetInput = () => {
+    this.setState({
+      username: ''
+    })
   }
 
   handleChange = (event) => {
@@ -30,14 +50,15 @@ class Form extends React.Component {
   handleSubmit = (event) => {
     event.preventDefault();
     this.props.persistUser(this.state.username)
+    this.handleResetInput();
+    this.props.removeForm();
   }
 
   render(){
     return(
-      <form onSubmit={this.handleSubmit}>
-        <label>Gamer Tag</label>
-        <Input onChange={this.handleChange} type='text' value={this.state.username} />
-      </form>
+      <StyledForm onSubmit={this.handleSubmit}>
+        <Input placeholder="Choose Gamer Tag and Press Enter" onClick={this.handleResetInput} onChange={this.handleChange} type='text' value={this.state.username} />
+      </ StyledForm>
     )
   }
 

@@ -1,9 +1,19 @@
 import React, { Component } from 'react';
 import './App.css';
 import Form from './Form';
-// import styled from 'styled-components';
+import styled from 'styled-components';
 
 class App extends Component {
+
+  state = {
+    active: true
+  }
+
+  removeForm = () => {
+    this.setState({
+      active: false
+    })
+  }
 
   persistUser = (username) => {
     fetch('http://localhost:3000/api/v1/users', {
@@ -19,9 +29,11 @@ class App extends Component {
   }
 
   render() {
-    return (
-        < Form persistUser={this.persistUser}/>
-    );
+      if(this.state.active) {
+          return < Form persistUser={this.persistUser} removeForm={this.removeForm}/>
+      } else {
+        return null
+      }
   }
 }
 
