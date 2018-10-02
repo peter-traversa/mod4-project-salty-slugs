@@ -5,6 +5,15 @@ class Api::V1::UsersController < ApplicationController
     render json: @users
   end
 
+  def new
+    @user = User.new
+  end
+
+  def create
+    @users = User.create(user_params)
+    render json: @users
+  end
+
   def update
     @note.update(user_params)
     if @user.save
@@ -17,7 +26,7 @@ class Api::V1::UsersController < ApplicationController
   private
 
   def user_params
-    params.permit(:title, :content)
+    params.require(:user).permit(:name)
   end
 
   def find_user
