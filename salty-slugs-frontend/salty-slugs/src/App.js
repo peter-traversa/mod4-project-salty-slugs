@@ -8,12 +8,9 @@ import {mazeWallDimensions} from './data'
 import Maze from './Maze'
 import Form from './Form'
 import Timer from './Timer'
-<<<<<<< HEAD
 import MazeImage from './MazeImage'
 import {mazeWallDimensions} from './data.js'
 import { Rect, Stage, Layer } from 'react-konva';
-=======
->>>>>>> gardiner
 
 
 
