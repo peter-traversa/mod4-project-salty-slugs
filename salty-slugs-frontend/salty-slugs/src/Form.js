@@ -51,14 +51,18 @@ class Form extends React.Component {
     event.preventDefault();
     this.props.persistUser(this.state.username)
     this.handleResetInput();
+    this.props.startGame();
     this.props.removeForm();
   }
 
   render(){
     return(
-      <StyledForm onSubmit={this.handleSubmit}>
-        <Input placeholder="Choose Gamer Tag and Press Enter" onClick={this.handleResetInput} onChange={this.handleChange} type='text' value={this.state.username} />
-      </ StyledForm>
+      
+        <StyledForm onSubmit={this.handleSubmit}>
+          <Input placeholder="Choose Gamer Tag and Press Enter" onClick={this.handleResetInput} onChange={this.handleChange} type='text' value={this.state.username} />
+        </ StyledForm>
+     
+      
     )
   }
 

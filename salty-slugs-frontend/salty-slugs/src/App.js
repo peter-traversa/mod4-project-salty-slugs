@@ -1,25 +1,46 @@
 import React, { Component } from 'react';
+import logo from './logo.svg';
 import './App.css';
-import Form from './Form';
+import Konva from 'konva';
+import {Stage,Layer} from 'react-konva';
+import Slug from './Slug'
+import {mazeWallDimensions} from './data'
+import Maze from './Maze'
+import Form from './Form'
 import Timer from './Timer'
-import MazeImage from './MazeImage'
-import {mazeWallDimensions} from './data.js'
-import { Rect, Stage, Layer, Image } from 'react-konva';
+
+
 
 class App extends Component {
-
   state = {
-    active: true,
-    slugX:870,
-    slugY:90
+    gameHasStarted:false,
+    formActive:true,
+    mouseShouldMove:false,
+    slugX:90,
+    slugY:80,
+    slugWidth:20,
+    slugHeight:20,
+    mazeOpacity:.5,
+    slugOpacity:.5,
+    formOpacity:1,
+    playerTime:0
   }
+
+  // styles = {
+  //   main: {
+  //     margin: 0,
+  //     padding: 0,
+  //     display: 'flex',
+  //     flexDirection: 'row'
+  //   }
+  // }
 
   removeForm = () => {
     this.setState({
-      active: false
+      formActive: false
     })
   }
-
+  
   persistUser = (username) => {
     fetch('http://localhost:3000/api/v1/users', {
       method: 'POST',
@@ -33,60 +54,95 @@ class App extends Component {
     }).then(function (response) { console.log(response); })
   }
 
-  renderMazeWalls = () => {
-    return mazeWallDimensions.map((wall)=>{
-      return <Rect x={wall.x}
-                   y={wall.y}
-                   width={wall.width}
-                   height={wall.height}
-                   fill={'pink'}/>
-    })
-  }
-
-
-  renderSlug = () => {
-    return <Rect x={this.state.slugX}
-                 y={this.state.slugY}
-                 width={ 50}
-                 height={ 50}
-                 fill='pink'
-                 stroke='black'
-                 strokeWidth={1} />
-  }
-
-  // renderHitLayer = () => {
-  //   return <Rect x={0}
-  //                y={0}
-  //                width={window.innerWidth}
-  //                height={window.innerHeight}/>
-  // }
-
-  newSlugXY = (e) => {
+  startGame = () => {
     this.setState({
-      slugX:e.clientX-25,
-      slugY:e.clientY-25
+      gameHasStarted:true
     })
   }
 
   render() {
-    return (this.state.active ? 
-      < Form persistUser={this.persistUser} removeForm={this.removeForm} /> 
-      : 
-      <Stage width={window.innerWidth} 
-             height={window.innerHeight}>
-        <Layer onMouseMove={this.newSlugXY}>
-          <MazeImage />
-          {this.renderMazeWalls()}
-          {this.renderSlug()}
-        </Layer>
-      </Stage>
-      )
+    
+    return (
+      
+        
+        <div>
+          <Stage width={1000} height={1000} style={{position:'absolute'}}>
+            <Layer>
+              <Slug slugX={this.state.slugX} slugY={this.state.slugY}
+                slugWidth={this.state.slugWidth} slugHeight={this.state.slugHeight} 
+                opacity={this.state.slugOpacity}/>
+              <Maze mazeWallDimensions={mazeWallDimensions} opacity={this.state.mazeOpacity}/>
+            </Layer>
+          </Stage>
+          <Form style={{position:'absolute'}}vertical-align='top'persistUser={this.persistUser} removeForm={this.removeForm}
+            opacity={this.state.opacity} startGame={this.startGame} />
+          <Timer collisions={this.state.collisions}/>
+        </div>
+    )
+  }
+
+
+  collisionTest = () => {
+   const collisionHappened =  mazeWallDimensions.some((wall) => {
+    return (this.state.slugX < wall.x + wall.width &&
+            this.state.slugX + this.state.slugWidth > wall.x &&
+            this.state.slugY < wall.y + wall.height &&
+            this.state.slugY + this.state.slugHeight > wall.y)})
+      
+    if(collisionHappened){
+      this.setState({
+        mouseShouldMove:false,
+        collisions:this.state.collisions+1
+      })
+
     }
-
-    componentDidUpdate(){
-      document.querySelector('canvas').addEventListener('mousemove',this.newSlugXY)}
+}
   
+  moveSlug = (e) => {
+    this.setState({
+      slugX: e.clientX-5,
+      slugY: e.clientY
+    })
+  }
 
+  sendSlugHome = () => {
+    this.setState({
+      slugX: 650,
+      slugY: 190
+    })
+  }
+
+  mouseShouldReset = (e) => {
+    if ((e.clientX > 630 && e.clientX < 700) && (e.clientY > 60 && e.clientY < 150)) {
+      this.setState({mouseShouldMove:true});
+    }
+  }
+  
+  componentDidMount(){
+    const canvas = document.querySelector('.konvajs-content')
+
+    canvas.addEventListener('mousemove', (e) => {
+      this.mouseShouldReset(e);
+      this.collisionTest();
+      if(this.state.gameHasStarted && this.state.mouseShouldMove){
+        this.moveSlug(e);
+      } else {
+        this.sendSlugHome(e);
+      }
+
+      if(this.state.gameHasStarted && this.state.mouseShouldMove){
+        if ((e.clientX > 630 && e.clientX < 700) && (e.clientY > 660 && e.clientY < 750)) {
+          console.log('you won!')
+        }
+      }
+      
+    })
+
+
+
+    
+
+  } // end of componentDidMount function
 
 }
 
