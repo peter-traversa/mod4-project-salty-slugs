@@ -8,7 +8,8 @@ const StyledTimer = styled.p`
 class Timer extends React.Component{
 
   state = {
-    count: 30
+    count: 30,
+    score: 0
   }
 
   tick = () => {
@@ -27,7 +28,7 @@ class Timer extends React.Component{
 
   render(){
     return(
-      <div>
+      <div style={{position:'absolute'}}>
         < StyledTimer onClick={this.startTimer}> {this.state.count} </StyledTimer >
       </div>
     )
