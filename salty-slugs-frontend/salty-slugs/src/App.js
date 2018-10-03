@@ -4,7 +4,7 @@ import Form from './Form';
 import Timer from './Timer'
 import MazeImage from './MazeImage'
 import {mazeWallDimensions} from './data.js'
-import { Rect, Stage, Layer, Image } from 'react-konva';
+import { Rect, Stage, Layer } from 'react-konva';
 
 class App extends Component {
 
@@ -72,14 +72,17 @@ class App extends Component {
     return (this.state.active ? 
       < Form persistUser={this.persistUser} removeForm={this.removeForm} /> 
       : 
-      <Stage width={window.innerWidth} 
+      <div id='post-login-app' >
+          <Stage width={window.innerWidth} 
              height={window.innerHeight}>
-        <Layer onMouseMove={this.newSlugXY}>
-          <MazeImage />
-          {this.renderMazeWalls()}
-          {this.renderSlug()}
-        </Layer>
-      </Stage>
+          <Layer onMouseMove={this.newSlugXY}>
+            <MazeImage />
+            {this.renderMazeWalls()}
+            {this.renderSlug()}
+          </Layer>
+        </Stage>
+        <Timer />
+      </div>
       )
     }
 

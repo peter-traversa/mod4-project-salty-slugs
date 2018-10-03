@@ -27,3 +27,9 @@
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
 }
+
+#post-login-app {
+  display: grid;
+  grid-template-columns: 90% 10%;
+  grid-template-rows: 20% 80%;
+}
