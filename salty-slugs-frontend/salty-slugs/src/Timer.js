@@ -3,7 +3,6 @@ import styled from 'styled-components';
 
 const StyledTimer = styled.p`
   font-size: 50px;
-  color: purple;
 `
 
 class Timer extends React.Component{
@@ -17,13 +16,13 @@ class Timer extends React.Component{
       clearInterval(this.countdown)
     } else {
       this.setState({
-        count: this.state.count - 0.1
+        count: this.state.count - 1
       })
     }
   }
 
   startTimer = () => {
-    this.countdown = setInterval(this.tick, 100)
+    this.countdown = setInterval(this.tick, 1000)
   }
 
   render(){

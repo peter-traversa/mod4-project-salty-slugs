@@ -76,7 +76,6 @@ class App extends Component {
           <Stage width={window.innerWidth} 
              height={window.innerHeight}>
           <Layer onMouseMove={this.newSlugXY}>
-            <MazeImage />
             {this.renderMazeWalls()}
             {this.renderSlug()}
           </Layer>
